@@ -1,0 +1,34 @@
+TOP Vetting Mega Template_Ver 3 August 7.xlsb
+
+could the DIVISION / CATEGORY / BRAND be break
+	to
+		division
+		category
+		brand
+
+		same on inique
+
+diffrent sku per users?
+
+brand , division . category code are alphanumeric?
+
+
+divsion
+multiple  category / brand
+
+
+activitiy creation select channel multiple - select all
+	select area mutiple - select all
+	customer name multiple - select all
+	outlet - multiple - select all
+
+nicole.taguines@unilever.com
+password
+
+circular name 
+	cycles year - id - activity type - category - brand
+
+	id - scope 	 activity type - division - category brand
+
+sarah 
+ 09088805527 
