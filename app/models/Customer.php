@@ -29,7 +29,7 @@ class Customer extends \Eloquent {
 					'ship_to' => $row->ship_to,
 					'outlet' => ($row->outlet = 'Y') ? 1: 0,
 					'dt_channel_included' => ($row->dt_channel_included = 'Y') ? 1: 0);
-				Customer::updateOrCreate($attributes, $attributes);
+				Customer::create($attributes);
 			}
     	});
 	}

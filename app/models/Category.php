@@ -7,10 +7,10 @@ class Category extends \Eloquent {
 	public static function batchInsert($records){
 		$records->each(function($row) {
 			// echo $row->division_id .'=>'.$row->division_desc.'</br>';
-			if(!is_null($row->category_id)){
+			if(!is_null($row->category_code)){
 				$attributes = array(
-					'id' => $row->category_id,
-					'division_id' => $row->division_id,
+					'id' => $row->category_code,
+					'division_id' => $row->division_code,
 					'category' => $row->category_desc);
 				Category::updateOrCreate($attributes, $attributes);
 			}

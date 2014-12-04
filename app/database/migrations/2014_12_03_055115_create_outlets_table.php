@@ -1,9 +1,9 @@
-	<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAreasTable extends Migration {
+class CreateOutletsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,13 @@ class CreateAreasTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('areas', function(Blueprint $table)
+		Schema::create('outlets', function(Blueprint $table)
 		{
 			$table->string('area_code');
-			$table->string('area_group_id');
-			$table->string('area');
-			$table->index('area_code');
+			$table->string('channel')->nullable();
+			$table->string('customer_ship_to_code');
+			$table->string('account_group');
+			$table->string('account_name');
 		});
 	}
 
@@ -29,7 +30,7 @@ class CreateAreasTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('areas');
+		Schema::drop('outlets');
 	}
 
 }

@@ -24,7 +24,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										{{ Form::label('circular_name', 'Circular Name', array('class' => 'control-label')) }}
-										{{ Form::text('circular_name','',array('class' => 'form-control', 'placeholder' => 'Circular No.' ,'disabled' => '')) }}
+										{{ Form::text('circular_name','',array('class' => 'form-control', 'placeholder' => 'Circular No.' ,'readonly' => '')) }}
 									</div>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 								<div class="row">
 									<div id="multiselect" class="col-lg-12">
 										{{ Form::label('category', 'Category', array('class' => 'control-label')) }}
-										<select class="form-control" data-placeholder="SELECT CATEGORY" id="category" name="category" multiple="multiple" ></select>
+										<select class="form-control" data-placeholder="SELECT CATEGORY" id="category" name="category[]" multiple="multiple" ></select>
 									</div>
 								</div>
 							</div>
@@ -90,7 +90,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										{{ Form::label('brand', 'Brand', array('class' => 'control-label')) }}
-										<select class="form-control" data-placeholder="SELECT BRAND" id="brand" name="brand" multiple="multiple" ></select>
+										<select class="form-control" data-placeholder="SELECT BRAND" id="brand" name="brand[]" multiple="multiple" ></select>
 									</div>
 								</div>
 							</div>
@@ -145,7 +145,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										{{ Form::label('objective', 'Objectives', array('class' => 'control-label' )) }}
-										{{ Form::select('objective', $objectives, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::select('objective[]', $objectives, null, array('id' => 'objective', 'class' => 'form-control', 'multiple' => 'multiple')) }}
 									</div>
 								</div>
 							</div>
@@ -180,7 +180,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										{{ Form::label('area_group', 'Group', array('class' => 'control-label' )) }}
-										{{ Form::select('area_group', $area_groups, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::select('area_group[]', $area_groups, null, array('id' => 'area_group', 'class' => 'form-control', 'multiple' => 'multiple')) }}
 									</div>
 								</div>
 							</div>
@@ -190,7 +190,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										{{ Form::label('channel', 'Channels Involved', array('class' => 'control-label' )) }}
-										{{ Form::select('channel', $channels, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::select('channel[]', $channels, null, array('id' => 'channel', 'class' => 'form-control', 'multiple' => 'multiple')) }}
 									</div>
 								</div>
 							</div>
@@ -202,8 +202,8 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										{{ Form::label('objective', 'Customer Involved', array('class' => 'control-label' )) }}
-										{{ Form::select('objective', $objectives, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::label('customer', 'Customer Involved', array('class' => 'control-label' )) }}
+										<select class="form-control" data-placeholder="SELECT CUSTOMER" id="customer" name="customer[]" multiple="multiple" ></select>
 									</div>
 								</div>
 							</div>
@@ -212,8 +212,8 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										{{ Form::label('objective', 'Outlet Involved', array('class' => 'control-label' )) }}
-										{{ Form::select('objective', $objectives, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::label('outlet', 'Outlet Involved', array('class' => 'control-label' )) }}
+										<select class="form-control" data-placeholder="SELECT OUTLET" id="outlet" name="outlet[]" multiple="multiple" ></select>
 									</div>
 								</div>
 							</div>
@@ -225,8 +225,8 @@
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
-										{{ Form::label('objective', 'SKU/s Involved', array('class' => 'control-label' )) }}
-										{{ Form::select('objective', $objectives, null, array('class' => 'form-control', 'multiple' => 'multiple')) }}
+										{{ Form::label('sku', 'SKU/s Involved', array('class' => 'control-label' )) }}
+										<select class="form-control" data-placeholder="SELECT SKU" id="sku" name="sku[]" multiple="multiple" ></select>
 									</div>
 								</div>
 							</div>
@@ -272,7 +272,7 @@ $('select#category').multiselect({
 	onDropdownHide: function(event) {
 		$.ajax({
 		   	type: "POST",
-		   	data: {categories: GetSelectValues($('select#category'))},
+		   	data: {categories: GetSelectValues($('select#category :selected'))},
 		   	url: "../api/brand",
 		   	success: function(data){
 		    	$('select#brand').empty();
@@ -291,6 +291,18 @@ $('select#brand').multiselect({
 	includeSelectAllOption: true,
 	enableFiltering: true,
 	onDropdownHide: function(event) {
+		$.ajax({
+		   	type: "POST",
+		   	data: {brand: GetSelectValues($('select#brand :selected'))},
+		   	url: "../api/sku",
+		   	success: function(data){
+		    	$('select#sku').empty();
+		   		$.each(data, function(i, text) {
+		   			$('<option />', {value: i, text: text}).appendTo($('select#sku')); 
+		   		});
+		   	$('select#sku').multiselect('rebuild');
+		   }
+		});
 		suggest_name();
 	}
 });
@@ -301,7 +313,67 @@ $('select#objective').multiselect({
 	enableFiltering: true
 });
 
-$('select#area_group, select#channel').multiselect({
+
+$('select#area_group').multiselect({
+	maxHeight: 200,
+	includeSelectAllOption: true,
+	enableFiltering: true,
+	onDropdownHide: function(event) {
+		getCustomer();
+	}
+});
+
+$('select#channel').multiselect({
+	maxHeight: 200,
+	includeSelectAllOption: true,
+	enableFiltering: true,
+	onDropdownHide: function(event) {
+		getCustomer();
+	}
+});
+
+function getCustomer(){
+	$.ajax({
+	   	type: "POST",
+	   	data: {group: GetSelectText($('select#area_group :selected')), channel: GetSelectText($('select#channel :selected'))},
+	   	url: "../api/customer",
+	   	success: function(data){
+	    	$('select#customer').empty();
+	   		$.each(data, function(i, text) {
+	   			$('<option />', {value: i, text: text}).appendTo($('select#customer')); 
+	   		});
+	   	$('select#customer').multiselect('rebuild');
+	   }
+	});
+}
+
+$('select#customer').multiselect({
+	maxHeight: 200,
+	includeSelectAllOption: true,
+	enableFiltering: true,
+	onDropdownHide: function(event) {
+		$.ajax({
+		   	type: "POST",
+		   	data: {customer: GetSelectValues($('select#customer :selected'))},
+		   	url: "../api/outlet",
+		   	success: function(data){
+		    	$('select#outlet').empty();
+		   		$.each(data, function(i, text) {
+		   			$('<option />', {value: i, text: text}).appendTo($('select#outlet')); 
+		   		});
+		   	$('select#outlet').multiselect('rebuild');
+		   }
+		});
+	}
+});
+
+$('select#outlet').multiselect({
+	maxHeight: 200,
+	includeSelectAllOption: true,
+	enableFiltering: true
+});
+
+$('select#sku').multiselect({
 	maxHeight: 200,
 	includeSelectAllOption: true,
 	enableFiltering: true

@@ -13,8 +13,9 @@ class CreateAreaGroupsTable extends Migration {
 	public function up()
 	{
 		Schema::create('area_groups', function($table){
-			$table->increments('id');
+			$table->string('id');
 			$table->string('area_group');
+			$table->index('id');
 		});
 	}
 

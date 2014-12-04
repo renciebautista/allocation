@@ -7,10 +7,10 @@ class Brand extends \Eloquent {
 	public static function batchInsert($records){
 		$records->each(function($row) {
 			// echo $row->division_id .'=>'.$row->division_desc.'</br>';
-			if(!is_null($row->brand_id)){
+			if(!is_null($row->brand_code)){
 				$attributes = array(
-					'id' => $row->brand_id,
-					'category_id' => $row->category_id,
+					'id' => $row->brand_code,
+					'category_id' => $row->category_code,
 					'brand' => $row->brand_desc);
 				Brand::updateOrCreate($attributes, $attributes);
 			}

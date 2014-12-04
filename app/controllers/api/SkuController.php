@@ -1,23 +1,25 @@
 <?php
-
 namespace Api;
 
-class CategoryController extends \BaseController {
+class SkuController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /api.category
+	 * GET /api/sku
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		if(\Request::ajax()){
-
-			$data = \Sku::select('category_code', 'category_desc')
-			->where('division_code',\Input::get('q'))
-			->groupBy('category_code')
-			->orderBy('category_desc')->lists('category_desc', 'category_code');
+			$filter = \Input::get('brand');
+			$data = array();
+			if($filter != ''){
+				$data = \Sku::select('sku_code', 'sku_desc')
+				->whereIn('brand_code',$filter)
+				->groupBy('sku_code')
+				->orderBy('sku_desc')->lists('sku_desc', 'sku_code');
+			}
 
 			return \Response::json($data,200);
 		}
@@ -25,7 +27,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /api.category/create
+	 * GET /api/sku/create
 	 *
 	 * @return Response
 	 */
@@ -36,7 +38,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /api.category
+	 * POST /api/sku
 	 *
 	 * @return Response
 	 */
@@ -47,7 +49,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /api.category/{id}
+	 * GET /api/sku/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -59,7 +61,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /api.category/{id}/edit
+	 * GET /api/sku/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -71,7 +73,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /api.category/{id}
+	 * PUT /api/sku/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -83,7 +85,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /api.category/{id}
+	 * DELETE /api/sku/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

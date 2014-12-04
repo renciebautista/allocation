@@ -6,10 +6,9 @@ class Division extends \Eloquent {
 
 	public static function batchInsert($records){
 		$records->each(function($row) {
-			// echo $row->division_id .'=>'.$row->division_desc.'</br>';
-			if(!is_null($row->division_id)){
+			if(!is_null($row->division_code)){
 				$attributes = array(
-					'id' => $row->division_id,
+					'id' => $row->division_code,
 					'division' => $row->division_desc);
 				Division::updateOrCreate($attributes, $attributes);
 			}

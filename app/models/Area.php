@@ -6,6 +6,7 @@ class Area extends \Eloquent {
 
 	public static function batchInsert($records){
 		$records->each(function($row) {
+			print_r($row);
 			if(!is_null($row->area_group)){
 				$area_group = AreaGroup::whereAreaGroup($row->area_group)->first();
 				$attributes = array(

@@ -14,11 +14,11 @@ class CreateSoldtoTable extends Migration {
 	{
 		Schema::create('sold_tos', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->string('customer_code');
 			$table->string('area_code');
 			$table->string('soldto_code')->nullable();
-			$table->string('customer_code');
 			$table->string('customer_name');
+			$table->index('customer_code');
 		});
 	}
 

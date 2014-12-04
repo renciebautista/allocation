@@ -25,7 +25,11 @@ class ActivityController extends \BaseController {
 		$scopes = Scope::orderBy('scope')->lists('scope', 'id');
 		$activity_types = ActivityType::orderBy('activity_type')->lists('activity_type', 'id');
 		$cycles = Cycle::orderBy('cycle_name')->lists('cycle_name', 'id');
-		$divisions = Division::orderBy('division')->lists('division', 'id');
+
+		$divisions = Sku::select('division_code', 'division_desc')
+			->groupBy('division_code')
+			->orderBy('division_desc')->lists('division_desc', 'division_code');
+
 		$objectives = Objective::orderBy('objective')->lists('objective', 'id');
 		$area_groups = AreaGroup::orderBy('area_group')->lists('area_group', 'id');
 		$channels = Channel::orderBy('channel')->lists('channel', 'id');
@@ -41,7 +45,7 @@ class ActivityController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		dd(Input::all());
 	}
 
 	/**

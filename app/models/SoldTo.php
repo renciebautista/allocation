@@ -9,7 +9,7 @@ class SoldTo extends \Eloquent {
 			if(!is_null($row->area_code)){
 				$attributes = array(
 					'area_code' => $row->area_code,
-					'soldto_code' => $row->sold_to_code, 
+					'soldto_code' => 0, 
 					'customer_code' => $row->customer_code, 
 					'customer_name' => $row->customer_name);
 				SoldTo::updateOrCreate($attributes, $attributes);

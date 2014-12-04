@@ -1,31 +1,46 @@
 <?php
-
 namespace Api;
-
-class CategoryController extends \BaseController {
+class CustomerController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /api.category
+	 * GET /api/customer
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		if(\Request::ajax()){
+			$data['group'] = \Input::get('group');
+			$data['channel'] = \Input::get('channel');
 
-			$data = \Sku::select('category_code', 'category_desc')
-			->where('division_code',\Input::get('q'))
-			->groupBy('category_code')
-			->orderBy('category_desc')->lists('category_desc', 'category_code');
-
+			$customers = \DB::table('customers')
+			->where(function($query) use ($data){
+				if(!empty($data['group'])){
+					$query->whereIn('group',$data['group'])->get();
+				}
+				if(!empty($data['channel'])){
+					$query->whereIn('dt_channel',$data['channel'])->get();
+				}
+			})
+			->groupBy('customer_code')
+			->orderBy('customer_name')
+			->get();
+			$data = array();
+			if($customers)
+			{
+				foreach ($customers as $row)
+				{
+					$data[$row->customer_code] = $row->customer_name;
+				}
+			}
 			return \Response::json($data,200);
 		}
 	}
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /api.category/create
+	 * GET /api/customer/create
 	 *
 	 * @return Response
 	 */
@@ -36,7 +51,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /api.category
+	 * POST /api/customer
 	 *
 	 * @return Response
 	 */
@@ -47,7 +62,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /api.category/{id}
+	 * GET /api/customer/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -59,7 +74,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /api.category/{id}/edit
+	 * GET /api/customer/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -71,7 +86,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /api.category/{id}
+	 * PUT /api/customer/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -83,7 +98,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /api.category/{id}
+	 * DELETE /api/customer/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

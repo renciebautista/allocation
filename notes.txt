@@ -32,3 +32,11 @@ circular name
 
 sarah 
  09088805527 
+
+
+ outlet code
+ sku no division/category/brand/cpg/packsize
+ cpg use
+
+
+ 

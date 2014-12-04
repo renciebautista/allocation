@@ -1,31 +1,43 @@
 <?php
-
 namespace Api;
 
-class CategoryController extends \BaseController {
+class OutletController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /api.category
+	 * GET /api/outlet
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		if(\Request::ajax()){
+			$filter = \Input::get('customer');
+			if($filter != ''){
+				$outlets = \DB::table('customers')
+				->whereIn('customer_code',$filter)
+				->where('outlet',1)
+				->get();
 
-			$data = \Sku::select('category_code', 'category_desc')
-			->where('division_code',\Input::get('q'))
-			->groupBy('category_code')
-			->orderBy('category_desc')->lists('category_desc', 'category_code');
-
+				$data = array();
+				if($outlets)
+				{
+					foreach ($outlets as $row)
+					{
+						$data[$row->id] = $row->account_name;
+					}
+				}
+				
+			}else{
+				$data = array();
+			}
 			return \Response::json($data,200);
 		}
 	}
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /api.category/create
+	 * GET /api/outlet/create
 	 *
 	 * @return Response
 	 */
@@ -36,7 +48,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /api.category
+	 * POST /api/outlet
 	 *
 	 * @return Response
 	 */
@@ -47,7 +59,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /api.category/{id}
+	 * GET /api/outlet/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -59,7 +71,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /api.category/{id}/edit
+	 * GET /api/outlet/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -71,7 +83,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /api.category/{id}
+	 * PUT /api/outlet/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -83,7 +95,7 @@ class CategoryController extends \BaseController {
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /api.category/{id}
+	 * DELETE /api/outlet/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

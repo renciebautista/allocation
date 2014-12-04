@@ -12,31 +12,42 @@ class BrandController extends \BaseController {
 	public function index()
 	{
 		if(\Request::ajax()){
-			// dd(\Input::all());
-			// $brands = \Category::where('division_id',\Input::get('q'))->get();
 			$filter = \Input::get('categories');
+			$data = array();
 			if($filter != ''){
-				$category_brand = \DB::table('brands')
-				->whereIn('category_id',$filter)
-				->get();
-				$brands = array();
-				if($category_brand)
-				{
-					foreach ($category_brand as $row)
-					{
-						$brands[$row->id] = $row->brand;
-					}
-				}
-				
-			}else{
-				$brands = array();
+				$data = \Sku::select('brand_code', 'brand_desc')
+				->whereIn('category_code',$filter)
+				->groupBy('brand_code')
+				->orderBy('brand_desc')->lists('brand_desc', 'brand_code');
 			}
-			return \Response::json($brands,200);
-			// return \Response::json(array(
-			// 	'error' => false,
-			// 	'brands' => $brands),
-			// 	200
-			// );
+
+			return \Response::json($data,200);
+
+			// // dd(\Input::all());
+			// // $brands = \Category::where('division_id',\Input::get('q'))->get();
+			// $filter = \Input::get('categories');
+			// if($filter != ''){
+			// 	$category_brand = \DB::table('brands')
+			// 	->whereIn('category_id',$filter)
+			// 	->get();
+			// 	$brands = array();
+			// 	if($category_brand)
+			// 	{
+			// 		foreach ($category_brand as $row)
+			// 		{
+			// 			$brands[$row->id] = $row->brand;
+			// 		}
+			// 	}
+				
+			// }else{
+			// 	$brands = array();
+			// }
+			// return \Response::json($brands,200);
+			// // return \Response::json(array(
+			// // 	'error' => false,
+			// // 	'brands' => $brands),
+			// // 	200
+			// // );
 		}
 	}
 

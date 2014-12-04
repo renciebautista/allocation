@@ -95,7 +95,7 @@
 		function GetSelectValues(select) {
 		  var foo = []; 
 			select.each(function(i, selected){ 
-			  foo = $(selected).val(); 
+			  foo[i] = $(selected).val(); 
 			});
 			return foo;
 		}
@@ -110,6 +110,14 @@
 			}else{
 				return foo[0];
 			}
+		}
+
+		function GetSelectText(select) {
+		  var foo = []; 
+			select.each(function(i, selected){ 
+			  	foo[i] = $(selected).text(); 
+			});
+			return foo;
 		}
 
 		$(document).ready(function() {

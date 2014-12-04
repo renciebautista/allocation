@@ -14,7 +14,6 @@ class CreateShipToTable extends Migration {
 	{
 		Schema::create('ship_tos', function(Blueprint $table)
 		{
-			$table->increments('id');
 			$table->string('customer_code');
 			$table->string('cmd_customer_code');
 			$table->string('ship_to_name');
