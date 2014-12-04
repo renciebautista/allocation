@@ -1,36 +1,38 @@
 <?php
 
 class Customer extends \Eloquent {
-	protected $fillable = ['group', 'area_code', 'area_desc' ,'sold_to_code', 'customer_code',
-	'customer_name', 'ship_to_code', 'ship_to_name', 'account_group', 'dt_channel', 'account_name',
-	'active', 'split', 'alternative_sold_to', 'with_allocation', 'ship_to_y', 'ship_to', 'outlet', 'dt_channel_included'];
-	public $timestamps = false;
+	protected $fillable = [];
 
-	public static function batchInsert($records){
-		$records->each(function($row) {
-			if(!is_null($row->group)){
-				$attributes = array(
-					'group' => $row->group,
-					'area_code' => $row->area_code,
-					'area_desc' => $row->area_desc,
-					'sold_to_code' => $row->sold_to_code,
-					'customer_code' => $row->customer_code,
-					'customer_name' => $row->customer_name,
-					'ship_to_code' => $row->ship_to_code,
-					'ship_to_name' => $row->ship_to_name,
-					'account_group' => $row->account_group,
-					'dt_channel' => $row->dt_channel,
-					'account_name' => $row->account_name,
-					'active' => ($row->active = 'Y') ? 1: 0,
-					'split' => $row->split,
-					'alternative_sold_to' => $row->alternative_sold_to,
-					'with_allocation' =>  ($row->with_allocation = 'Y') ? 1: 0,
-					'ship_to_y' => ($row->ship_to_y = 'Y') ? 1: 0,
-					'ship_to' => $row->ship_to,
-					'outlet' => ($row->outlet = 'Y') ? 1: 0,
-					'dt_channel_included' => ($row->dt_channel_included = 'Y') ? 1: 0);
-				Customer::create($attributes);
+	public static function getList(){
+		$total = DB::table('sold_tos')
+			->select('area_group','area','customer_name','customer_code','sold_tos.area_code as sold_to_area_code')
+			->join('areas', 'sold_tos.area_code', '=', 'areas.area_code')
+			->join('area_groups', 'areas.area_group_id', '=', 'area_groups.id')
+			// ->where('sold_tos.active', 1)
+			// ->orderBy('area_group','DESC')
+			// ->orderBy('area')
+			->get();
+		foreach ($total as $key => $value) {
+			$shipto = self::getShipTo($value->customer_code);
+			foreach ($shipto as $key1 => $value1) {
+				$shipto[$key1]->outlet = self::getOutlet($value->sold_to_area_code, $value1->cmd_customer_code);
 			}
-    	});
+			$total[$key]->shipto = $shipto;
+		}
+		return $total;
+	}
+
+	private static function getShipTo($customer_code){
+		return DB::table('ship_tos')
+			->where('customer_code',$customer_code)
+			->get();
+	}
+
+	private static function getOutlet($area_code, $customer_ship_to_code){
+		return DB::table('outlets', 'channel')
+			->join('channels', 'outlets.channel', '=', 'channels.id')
+			->where('area_code',$area_code)
+			->where('customer_ship_to_code',$customer_ship_to_code)
+			->get();
 	}
 }

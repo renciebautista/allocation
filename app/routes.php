@@ -24,7 +24,7 @@ Route::resource('shipto', 'ShipToController');
 
 Route::resource('activity', 'ActivityController');
 
-
+Route::resource('scheme', 'SchemeController');
 
 Route::group(array('prefix' => 'api'), function()
 {
@@ -37,12 +37,13 @@ Route::group(array('prefix' => 'api'), function()
 
 Route::group(array('prefix' => 'import'), function()
 {
+	Route::get('areagrouplist', 'ImportController@areagrouplist');
 	Route::get('arealist', 'ImportController@arealist');
 	Route::get('soldtolist', 'ImportController@soldtolist');
 	Route::get('shiptolist', 'ImportController@shiptolist');
 	Route::get('outletlist', 'ImportController@outletlist');
-	// Route::get('shiptolist', 'ImportController@shiptolist');
-	// Route::get('allocationlist', 'ImportController@allocationlist');
+	Route::get('channellist', 'ImportController@channellist');
+	Route::get('accountgrouplist', 'ImportController@accountgrouplist');
 	// Route::get('activitytypelist', 'ImportController@activitytypelist');
 	// Route::get('divisionlist', 'ImportController@divisionlist');
 	// Route::get('categorylist', 'ImportController@categorylist');
@@ -73,7 +74,6 @@ Route::get('/customer', function(){
 					if($outlet->cmd_customer_code != ''){
 
 						foreach ($channels as $channel) {
-							// echo $channel->channel;
 							$outlets = DB::table('outlets')
 								->where('customer_ship_to_code',$outlet->cmd_customer_code )
 								->where('area_code',$_area->area_code)

@@ -2,6 +2,13 @@
 
 class ImportController extends \BaseController {
 
+	public function areagrouplist()
+	{
+		Excel::selectSheets('area_groups')->load(public_path('import/customer.xlsx'), function($reader) {
+			AreaGroup::batchInsert($reader->get());
+		});
+	}
+
 	public function arealist()
 	{
 		Excel::selectSheets('areas')->load(public_path('import/customer.xlsx'), function($reader) {
@@ -20,6 +27,20 @@ class ImportController extends \BaseController {
 	{
 		Excel::selectSheets('ship_to')->load(public_path('import/customer.xlsx'), function($reader) {
 			ShipTo::batchInsert($reader->get());
+		});
+	}
+
+	public function channellist()
+	{
+		Excel::selectSheets('channel')->load(public_path('import/customer.xlsx'), function($reader) {
+			Channel::batchInsert($reader->get());
+		});
+	}
+
+	public function accountgrouplist()
+	{
+		Excel::selectSheets('account_group')->load(public_path('import/customer.xlsx'), function($reader) {
+			AccountGroup::batchInsert($reader->get());
 		});
 	}
 
@@ -87,12 +108,7 @@ class ImportController extends \BaseController {
 	}
 
 	//---------
-	public function channel()
-	{
-		Excel::selectSheets('Channel')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
-			Channel::batchInsert($reader->get(array('channel_code', 'channel_desc')));
-		});
-	}
+
 
 	//---------
 	public function customer()

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateShipToTable extends Migration {
+class AddActiveOnShipTosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,9 @@ class CreateShipToTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ship_tos', function(Blueprint $table)
+		Schema::table('ship_tos', function(Blueprint $table)
 		{
-			$table->string('customer_code');
-			$table->string('cmd_customer_code')->nullable();
-			$table->string('ship_to_name');
+			$table->boolean('active')->default(0);
 		});
 	}
 
@@ -28,7 +26,10 @@ class CreateShipToTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ship_tos');
+		Schema::table('ship_tos', function(Blueprint $table)
+		{
+			$table->dropColumn('active');
+		});
 	}
 
 }

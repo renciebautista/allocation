@@ -1,7 +1,7 @@
 <?php
 
-class Channel extends \Eloquent {
-	protected $fillable = ['id', 'channel'];
+class AccountGroup extends \Eloquent {
+	protected $fillable = ['id', 'account_group'];
 	public $timestamps = false;
 
 	public static function batchInsert($records){
@@ -9,7 +9,7 @@ class Channel extends \Eloquent {
 			if(!is_null($row->id)){
 				$attributes = array(
 					'id' => $row->id,
-					'channel' => $row->channel);
+					'account_group' => $row->account_group);
 				self::updateOrCreate($attributes, $attributes);
 			}
     	});

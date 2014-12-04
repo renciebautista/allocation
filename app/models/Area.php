@@ -6,14 +6,13 @@ class Area extends \Eloquent {
 
 	public static function batchInsert($records){
 		$records->each(function($row) {
-			print_r($row);
 			if(!is_null($row->area_group)){
 				$area_group = AreaGroup::whereAreaGroup($row->area_group)->first();
 				$attributes = array(
 					'area_group_id' => $area_group->id,
 					'area_code' => $row->area_code, 
 					'area' => $row->area_name);
-				Area::updateOrCreate($attributes, $attributes);
+				self::updateOrCreate($attributes, $attributes);
 			}
 			
     	});

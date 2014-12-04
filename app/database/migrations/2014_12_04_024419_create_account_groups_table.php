@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateShipToTable extends Migration {
+class CreateAccountGroupsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateShipToTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ship_tos', function(Blueprint $table)
+		Schema::create('account_groups', function(Blueprint $table)
 		{
-			$table->string('customer_code');
-			$table->string('cmd_customer_code')->nullable();
-			$table->string('ship_to_name');
+			$table->string('id');
+			$table->string('account_group');
+			$table->index('id');
 		});
 	}
 
@@ -28,7 +28,7 @@ class CreateShipToTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ship_tos');
+		Schema::drop('account_groups');
 	}
 
 }
