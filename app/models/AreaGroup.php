@@ -15,4 +15,10 @@ class AreaGroup extends \Eloquent {
 			
     	});
 	}
+
+	// test relationship	
+	public function areas()
+	{
+		return $this->hasMany('Area');
+	}
 }

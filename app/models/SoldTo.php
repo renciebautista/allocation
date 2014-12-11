@@ -17,4 +17,16 @@ class SoldTo extends \Eloquent {
 			
     	});
 	}
+
+	// test relationship	
+	public function area()
+	{
+		return $this->belongsTo('Area', 'area_code', 'area_code');
+	}
+
+	public function ship_tos()
+	{
+		return $this->hasMany('ShipTo','customer_code','customer_code');
+	}
+
 }

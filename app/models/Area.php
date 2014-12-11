@@ -17,4 +17,15 @@ class Area extends \Eloquent {
 			
     	});
 	}
+
+	// test relationship	
+	public function area_group()
+	{
+		return $this->belongsTo('AreaGroup', 'area_group_id', 'id');
+	}
+
+	public function sold_tos()
+	{
+		return $this->hasMany('SoldTo','area_code','area_code');
+	}
 }

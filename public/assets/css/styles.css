@@ -20,8 +20,11 @@
 }
 
 #allocation{
-	/*font-size: 12px;	*/
+	/*font-size: 13px;	*/
 	max-height: 400px;
+}
+#allocation .info, .warning{
+  color: #FFF;
 }
 #allocation table th, td {
 	white-space:nowrap;
@@ -90,4 +93,40 @@
   width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
   text-align: left;
   // white-space: nowrap; /*whether to display in one line or not*/
+}
+
+#allocation {
+  table {
+        width: 100%;
+    }
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 30px;
+
+    /*text-align: left;*/
+}
+
+tbody {
+    height: 120px;
+    overflow-y: auto;
+}
+
+thead {
+    /* fallback */
+}
+
+
+tbody td, thead th {
+    width: 19.2%;
+    float: left;
+}
 }

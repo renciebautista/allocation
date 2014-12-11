@@ -60,7 +60,7 @@ class ImportController extends \BaseController {
 
 	public function activitytypelist()
 	{
-		Excel::load(public_path('import/activitytypelist.xls'), function($reader) {
+		Excel::selectSheets('activity_type')->load(public_path('import/customer.xlsx'), function($reader) {
 			ActivityType::batchInsert($reader->get());
 		});
 	}
@@ -86,19 +86,19 @@ class ImportController extends \BaseController {
 		});
 	}
 
-	public function cpglist()
-	{
-		Excel::selectSheets('SKU')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
-			Cpg::batchInsert($reader->get(array('brand_code', 'cpg_code','cpg_desc')));
-		});
-	}
+	// public function cpglist()
+	// {
+	// 	Excel::selectSheets('SKU')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
+	// 		Cpg::batchInsert($reader->get(array('brand_code', 'cpg_code','cpg_desc')));
+	// 	});
+	// }
 
-	public function packsizelist()
-	{
-		Excel::selectSheets('SKU')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
-			PackSize::batchInsert($reader->get(array('packsize_code', 'packsize_desc')));
-		});
-	}
+	// public function packsizelist()
+	// {
+	// 	Excel::selectSheets('SKU')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
+	// 		PackSize::batchInsert($reader->get(array('packsize_code', 'packsize_desc')));
+	// 	});
+	// }
 
 	public function skulist()
 	{
@@ -111,12 +111,13 @@ class ImportController extends \BaseController {
 
 
 	//---------
-	public function customer()
-	{
-		Excel::selectSheets('Customer')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
-			Customer::batchInsert($reader->get());
-		});
-	}
+	// public function customer()
+	// {
+	// 	Excel::selectSheets('Customer')->load(public_path('import/masterfile_12012014.xlsx'), function($reader) {
+	// 		Customer::batchInsert($reader->get());
+	// 	});
+	// }
+
 
 
 }

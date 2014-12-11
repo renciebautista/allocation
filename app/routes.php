@@ -44,17 +44,24 @@ Route::group(array('prefix' => 'import'), function()
 	Route::get('outletlist', 'ImportController@outletlist');
 	Route::get('channellist', 'ImportController@channellist');
 	Route::get('accountgrouplist', 'ImportController@accountgrouplist');
-	// Route::get('activitytypelist', 'ImportController@activitytypelist');
-	// Route::get('divisionlist', 'ImportController@divisionlist');
-	// Route::get('categorylist', 'ImportController@categorylist');
-	// Route::get('brandlist', 'ImportController@brandlist');
-	// Route::get('cpglist', 'ImportController@cpglist');
-	// Route::get('packsizelist', 'ImportController@packsizelist');
+	Route::get('activitytypelist', 'ImportController@activitytypelist');
+	Route::get('divisionlist', 'ImportController@divisionlist');
+	Route::get('categorylist', 'ImportController@categorylist');
+	Route::get('brandlist', 'ImportController@brandlist');
+	Route::get('cpglist', 'ImportController@cpglist');
+	Route::get('packsizelist', 'ImportController@packsizelist');
 
 	Route::get('skulist', 'ImportController@skulist');
 
 	Route::get('channel', 'ImportController@channel');
 	Route::get('customer', 'ImportController@customer');
+
+	// Route::get('mtprimarysales', function(){
+	// 	Artisan::call('db:seed', array('--class' => 'MtPrimarySalesTableSeeder'));
+	// });
+	// Route::get('dtsecondarysales', function(){
+	// 	Artisan::call('db:seed', array('--class' => 'DtSecondarySalesTableSeeder'));
+	// });
 });
 
 

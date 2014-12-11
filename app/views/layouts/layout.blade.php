@@ -8,6 +8,7 @@
 		{{ HTML::style('assets/plugins/twitter-bootstrap/css/bootswatch.min.css') }}
 		{{ HTML::style('assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css') }}
 		{{ HTML::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css') }}
+		{{ HTML::style('assets/plugins/DataTables-1.10.4/css/jquery.dataTables.min.css') }}
 		{{ HTML::style('assets/css/styles.css') }}
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -88,7 +89,10 @@
 
 	{{ HTML::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js') }}
 
+	{{ HTML::script('assets/plugins/DataTables-1.10.4/js/jquery.dataTables.min.js') }}
+
 	{{ HTML::script('assets/js/selectchain.js') }}
+
 	{{ HTML::script('assets/js/function.js') }}
 
 	<script type="text/javascript">
@@ -119,6 +123,8 @@
 			});
 			return foo;
 		}
+
+		
 
 		$(document).ready(function() {
 		@section('page-script')

@@ -10,7 +10,13 @@ class SchemeController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		// $customer = AreaGroup::with('areas.sold_tos.ship_tos.outlets')->get();
+		// // $customer = AreaGroup::all();
+		// // $customer->load('areas.sold_tos');
+		// // echo "<pre>";
+		// // print_r($customer);
+		// // echo "</pre>";
+		// return View::make('scheme.index', compact('customer'));
 	}
 
 	/**
@@ -44,7 +50,7 @@ class SchemeController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$customer = Customer::getList();
+		$customer = Customer::getList2();
 		return View::make('scheme.show', compact('customer'));
 	}
 

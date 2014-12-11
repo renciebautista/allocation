@@ -48,63 +48,67 @@
 						<td colspan="16">No record found!</td>
 					</tr>
 					@else
-					@foreach($customer as $area)
-					<tr class="info">
-						<td>{{ $area->area_group }}</td>
-						<td>{{ $area->area }}</td>
-						<td>{{ $area->customer_name }}</td>
-						<td>{{ $area->customer_name }} TOTAL</td>
-						<td></td>
-						<td></td>
-						<td>{{ number_format($area->gsv,2) }}</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-						@foreach($area->shipto as $shipto)
-						<tr>
-							<td>{{ $area->area_group }}</td>
-							<td>{{ $area->area }}</td>
-							<td>{{ $area->customer_name }}</td>
-							<td>{{ $shipto->ship_to_name }}</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>{{ $shipto->gsv }}</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-							@foreach($shipto->outlet as $outlet)
-							<tr class="warning">
-								<td>{{ $area->area_group }}</td>
-								<td>{{ $area->area }}</td>
-								<td>{{ $area->customer_name }}</td>
-								<td>{{ $shipto->ship_to_name }}</td>
-								<td>{{ $outlet->channel }}</td>
-								<td>{{ $outlet->account_name }}</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td>{{ $outlet->gsv }}</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+					@foreach($customer as $area_group)
+						@foreach($area_group->areas as $area)
+							@foreach($area->sold_tos as $sold_to)
+								<tr class="info">
+									<td>{{ $area_group->area_group }}</td>
+									<td>{{ $area->area }}</td>
+									<td>{{ $sold_to->customer_name }}</td>
+									<td>{{ $sold_to->customer_name }} TOTAL</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								@foreach($sold_to->ship_tos as $ship_to)
+								<tr>
+									<td>{{ $area_group->area_group }}</td>
+									<td>{{ $area->area }}</td>
+									<td>{{ $sold_to->customer_name }}</td>
+									<td>{{ $ship_to->ship_to_name }}</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+									@foreach($ship_to->outlets as $outlet)
+									<tr class="warning">
+										<td>{{ $area_group->area_group }}</td>
+										<td>{{ $area->area }}</td>
+										<td>{{ $sold_to->customer_name }}</td>
+										<td>{{ $ship_to->ship_to_name }}</td>
+										<td></td>
+										<td>{{ $outlet->account_name }}</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									@endforeach
+								@endforeach
 							@endforeach
 						@endforeach
 					@endforeach

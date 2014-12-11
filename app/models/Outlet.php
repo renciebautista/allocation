@@ -21,4 +21,12 @@ class Outlet extends \Eloquent {
 			
     	});
 	}
+
+	// test relationship	
+	public function shipto()
+	{
+		return $this->belongsTo('ShipTo', 'cmd_customer_code', 'customer_ship_to_code');
+	}
+
+
 }

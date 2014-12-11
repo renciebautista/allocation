@@ -18,4 +18,15 @@ class ShipTo extends \Eloquent {
 			}
     	});
 	}
+
+	// test relationship	
+	public function soldto()
+	{
+		return $this->belongsTo('SoldTo', 'customer_code', 'customer_code');
+	}
+
+	public function outlets()
+	{
+		return $this->hasMany('Outlet','customer_ship_to_code','cmd_customer_code');
+	}
 }

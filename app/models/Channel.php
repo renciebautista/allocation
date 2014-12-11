@@ -14,4 +14,5 @@ class Channel extends \Eloquent {
 			}
     	});
 	}
+
 }

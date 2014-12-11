@@ -37,6 +37,51 @@ sarah
  outlet code
  sku no division/category/brand/cpg/packsize
  cpg use
+12-11-2014
+change gsv to ado_cs in ship_to_sales
+
+
+group
+	group_code
+	group_name
+
+area
+	group_code
+	area_code
+	area_name
+
+customer
+	area_code
+	customer_code
+	customer_name
+	active
+
+ship_to
+	customer_code
+	ship_to_code
+	ship_to_name
+	split
+	active
+
+account
+	area_code
+	ship_to_code
+	account_group_code
+	channel_code
+	account_name
+	active
+
+outlet
+	area_code
+	ship_to_code
+	account_name
+	customer_code
+	outlet_code
+	outlet_name
+
+
+
+
 
 
  
